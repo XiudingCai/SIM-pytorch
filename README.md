@@ -1,7 +1,7 @@
 # SIM-pytorch
-Official code for Self Identity Mapping
+Official code for Self Identity Mapping.
 
-Quick Example
+## Quick Example
 
 ```python
 import torch
@@ -86,3 +86,8 @@ for _ in range(10):
 
     print(f"Loss: {loss.item():.6f}")
 ```
+
+## TODO
+
+- [ ] Release a preprint of the paper.
+- [ ] Release pipeline code for various tasks, including image classification and domain generalization, etc.
