@@ -65,23 +65,10 @@ def init_proj(input_dim_name, output_dim_name=None, proj_type='InvSS',
                 nn.ReLU(),
                 nn.Linear(K, K, bias=True),
             )
-                self.proj_y = self.proj_x
-                self.predictor = nn.Sequential(
-                    nn.Linear(K, K, bias=True),
-                )
-            elif proj_type == 'Linear':
-                self.proj_x = nn.Sequential(
-                    Reduce('b n c -> b n 1', 'mean')
-                )
-                self.proj_y = nn.Identity()
-                self.predictor = nn.Sequential(
-                    nn.Linear(K, K // 4),
-                    nn.LayerNorm(K // 4),
-                    nn.ReLU(True),
-                    nn.Linear(K // 4, 1)
-                )
-            else:
-                raise NotImplementedError
+            self.proj_y = self.proj_x
+            self.predictor = nn.Sequential(
+                nn.Linear(K, K, bias=True),
+            )
 
         return wrapper
 
