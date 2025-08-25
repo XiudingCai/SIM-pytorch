@@ -2,7 +2,8 @@
 Official code for Self Identity Mapping.
 
 ## Quick Example
-
+Note:
+When using the @init_proj decorator, you must provide the names of the module’s input and output dimensions (e.g., in_channels and out_channels). These names must correspond to attributes of the target block itself (for example, self.in_channels and self.out_channels inside the class). SIM uses these attributes to determine the correct shape of the reconstructor network. If these attributes are missing or not defined in the block, the initialization will fail.
 ```python
 import torch
 import torch.nn as nn
