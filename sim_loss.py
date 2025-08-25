@@ -329,6 +329,7 @@ if __name__ == '__main__':
         loss_sim_tracker = LossSimTracker(model)
         loss_sim_1 = loss_sim_tracker.compute_loss_sim()
 
+        # IMPLEMENTATION #2
         loss_sim_2 = compute_loss_sim(model)
 
         print(loss_sim_1.item(), loss_sim_2.item())
