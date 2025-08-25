@@ -107,7 +107,7 @@ def forward_with_sim_cache():
 
                 dim_K = min(max(int(self.channel_sampling_ratio * x.shape[-1]), 1), x.shape[-1])
                 if dim_K != x.shape[-1]:
-                    # 选择前面的通道
+
                     x = x[..., :dim_K]
                     y = y[..., :dim_K]
 
@@ -127,16 +127,14 @@ def forward_with_sim_cache():
                     x = x[:, patch_id]
                     y = y[:, patch_id]
                 elif self.token_sampling_type == 'v1':
-                    # 获取样本的数量和每个样本的维度
                     B, N, _ = x.shape
-                    # 为每个样本生成不同的随机排列的 patch_id
-                    # rand_ids 的形状为 (B, N)
+                    # Generate a different random permutation of patch indices for each sample. rand_ids has shape (B, N)
                     rand_ids = torch.argsort(torch.rand(B, N, device=x.device), dim=1)
 
-                    # 对每个样本选择前 token_sampling_ratio 个随机位置
+                    # Select the first subset of indices per sample according to sampling ratio
                     patch_id = rand_ids[:, :int(min(token_sampling_ratio, N))]
 
-                    # 使用 gather 来实现不同样本的不同采样
+                    # Use gather to apply different sampled indices for each sample
                     x = torch.gather(x.clone(), 1, patch_id.unsqueeze(-1).expand(-1, -1, x.shape[-1]))
                     y = torch.gather(y.clone(), 1, patch_id.unsqueeze(-1).expand(-1, -1, y.shape[-1]))
                 elif self.token_sampling_type == 'v2':
