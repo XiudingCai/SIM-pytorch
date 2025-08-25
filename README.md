@@ -56,9 +56,10 @@ for _ in range(10):
     print(f"Loss: {loss.item():.6f}")
 ```
 
-Cached Tracker Usage
+## Cached Tracker Usage
 
-The cached version avoids re-scanning your model at every step:
+**Note:**
+This cached tracker provides a faster version of SIM loss computation. It only scans the model once (during the first call) to locate SIM-enabled blocks, and then reuses the cached results in subsequent steps. This avoids repeatedly traversing the model at every iteration, which reduces overhead. However, this approach is not suitable for dynamic networks whose structure or parameters change during training, since the cached information would become outdated.
 ```python
 from sim_loss import init_proj, forward_with_sim_cache, compute_loss_sim, LossSimTracker
 
