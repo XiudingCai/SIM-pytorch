@@ -56,19 +56,19 @@ def init_proj(input_dim_name, output_dim_name=None, proj_type='InvSS',
                     self.pre_proj = nn.Identity()
             else:
                 self.pre_proj = nn.Identity()
-
-            K = int(K_in ** 0.5)
-            self.proj_x = nn.Sequential(
-                nn.Linear(K_in, K * 2, bias=True),
-                nn.ReLU(),
-                nn.Linear(K * 2, K, bias=True),
-                nn.ReLU(),
-                nn.Linear(K, K, bias=True),
-            )
-            self.proj_y = self.proj_x
-            self.predictor = nn.Sequential(
-                nn.Linear(K, K, bias=True),
-            )
+            if proj_type == 'InvSS':
+                K = int(K_in ** 0.5)
+                self.proj_x = nn.Sequential(
+                    nn.Linear(K_in, K * 2, bias=True),
+                    nn.ReLU(),
+                    nn.Linear(K * 2, K, bias=True),
+                    nn.ReLU(),
+                    nn.Linear(K, K, bias=True),
+                )
+                self.proj_y = self.proj_x
+                self.predictor = nn.Sequential(
+                    nn.Linear(K, K, bias=True),
+                )
 
         return wrapper
 
