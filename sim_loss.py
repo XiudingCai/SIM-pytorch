@@ -57,7 +57,7 @@ def init_proj(input_dim_name, output_dim_name=None, proj_type='InvSS',
             else:
                 self.pre_proj = nn.Identity()
             if proj_type == 'InvSS':
-                K = int(K_in ** 0.5)
+                K = 128
                 self.proj_x = nn.Sequential(
                     nn.Linear(K_in, K * 2, bias=True),
                     nn.ReLU(),
